@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.gradleup.shadow' version '9.3.0'
+}
+
+application {
+    mainClass = 'eleeter.elfontlib.EmojiGLDemo'
+}
+
+group = 'eleeter.elfontlib'
+version = '1.0-SNAPSHOT'
+
+project.ext.lwjglVersion = "3.4.1"
+project.ext.jomlVersion = "1.10.8"
+project.ext.platform = org.gradle.internal.os.OperatingSystem.current().isWindows() ? "windows" : org.gradle.internal.os.OperatingSystem.current().isMacOsX() ? "macos" : "linux"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /* LWJGL Core */
+    implementation platform("org.lwjgl:lwjgl-bom:${project.ext.lwjglVersion}")
+    implementation "org.lwjgl:lwjgl"
+    implementation "org.lwjgl:lwjgl-glfw"
+    implementation "org.lwjgl:lwjgl-opengl"
+    implementation "org.lwjgl:lwjgl-stb"
+    implementation "org.lwjgl:lwjgl-nanovg"
+
+    implementation "com.google.code.gson:gson:2.10.1"
+    implementation "org.joml:joml:${project.ext.jomlVersion}"
+
+    implementation "com.twelvemonkeys.imageio:imageio-webp:3.13.1"
+
+    runtimeOnly "org.lwjgl:lwjgl::natives-${project.ext.platform}"
+    runtimeOnly "org.lwjgl:lwjgl-glfw::natives-${project.ext.platform}"
+    runtimeOnly "org.lwjgl:lwjgl-opengl::natives-${project.ext.platform}"
+    runtimeOnly "org.lwjgl:lwjgl-stb::natives-${project.ext.platform}"
+    runtimeOnly "org.lwjgl:lwjgl-nanovg::natives-${project.ext.platform}"
+}
+
+shadowJar {
+    archiveClassifier.set('all')
+
+    manifest {
+        attributes('Main-Class': 'eleeter.elfontlib.EmojiGLDemo')
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
