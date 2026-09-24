@@ -97,4 +97,4 @@ Font loading is MSDF-only.
 
 ## License
 
-GPL-3.0, see `LICENSE`.
+MIT, see `LICENSE`.
